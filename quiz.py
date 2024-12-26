@@ -1,6 +1,26 @@
 import json
 import random
 import requests
+from os import system, name 
+from time import sleep
+
+def clear_screen(): 
+
+    """ 
+    Clears the console screen based on the operating system. 
+
+    This function checks the operating system and executes the appropriate command to clear the console: 
+    - On Windows systems, it runs the "cls" command. 
+    - On other systems (e.g., Linux, macOS), it runs the "clear" command. 
+ 
+    Side Effects: 
+        - Executes a system command to clear the terminal screen. 
+    """ 
+
+    if name == "nt": 
+        system("cls") 
+    else: 
+        system("clear")
 
 def html_specialchars_decode(text):
     """
@@ -93,6 +113,8 @@ random.shuffle(questions)
 
 # Iterate through each question and present it to the user.
 for category, difficulty, question, correct_answer, incorrect_answers in questions:
+    clear_screen()
+
     print(f"\nCategory: {category}")
     print(f"Difficulty: {difficulty}")
     print(f"\n{question}")
@@ -121,5 +143,9 @@ for category, difficulty, question, correct_answer, incorrect_answers in questio
         print("Incorrect.")
         print(f"The correct answer is {correct_answer_letter}) {correct_answer}")
     
+    sleep(1)
+
+clear_screen()
+
 # Display the final score.
 print(f"\nYou scored {score} out of {num_questions}.")

@@ -47,7 +47,7 @@ def json_to_tuples(json_data):
       (question, correct_answer, incorrect_answers)
   """
 
-  data = json.loads(json_data)
+  data = json_data
   results = data.get('results', [])
   tuples = []
 

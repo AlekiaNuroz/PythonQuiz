@@ -5,10 +5,13 @@ def html_specialchars_decode(text):
   Converts HTML special characters to their keyboard equivalents.
 
   Args:
-    text: The input string containing HTML special characters.
+    text: The input string or a list of strings containing HTML special characters.
 
   Returns:
-    The string with HTML special characters converted to their keyboard equivalents.
+    If the input is a string, returns the string with HTML special characters 
+    converted to their keyboard equivalents. 
+    If the input is a list of strings, returns a new list with each string 
+    having HTML special characters converted.
   """
   replacements = {
       "&quot;": '"',
@@ -17,9 +20,18 @@ def html_specialchars_decode(text):
       "&gt;": ">",
       "&#039;": "'",
   }
-  for key, value in replacements.items():
-    text = text.replace(key, value)
-  return text
+
+  def decode_string(s):
+    for key, value in replacements.items():
+      s = s.replace(key, value)
+    return s
+
+  if isinstance(text, str):
+    return decode_string(text)
+  elif isinstance(text, list):
+    return [decode_string(s) for s in text]
+  else:
+    raise TypeError("Input must be a string or a list of strings.")
 
 def json_to_tuples(json_data):
   """

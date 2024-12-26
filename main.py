@@ -1,5 +1,26 @@
 import json
 
+def html_specialchars_decode(text):
+  """
+  Converts HTML special characters to their keyboard equivalents.
+
+  Args:
+    text: The input string containing HTML special characters.
+
+  Returns:
+    The string with HTML special characters converted to their keyboard equivalents.
+  """
+  replacements = {
+      "&quot;": '"',
+      "&amp;": "&",
+      "&lt;": "<",
+      "&gt;": ">",
+      "&#039;": "'",
+  }
+  for key, value in replacements.items():
+    text = text.replace(key, value)
+  return text
+
 def json_to_tuples(json_data):
   """
   Converts JSON data containing quiz questions into a list of tuples.
@@ -17,11 +38,11 @@ def json_to_tuples(json_data):
   tuples = []
 
   for result in results:
-    question = result.get('question')
+    question = html_specialchars_decode(result.get('question'))
     difficulty = result.get('difficulty')
     category = result.get('category')
-    correct_answer = result.get('correct_answer')
-    incorrect_answers = result.get('incorrect_answers')
+    correct_answer = html_specialchars_decode(result.get('correct_answer'))
+    incorrect_answers = html_specialchars_decode(result.get('incorrect_answers'))
     tuples.append((question, difficulty, category, correct_answer, incorrect_answers))
 
   return tuples
